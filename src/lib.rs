@@ -1,15 +1,16 @@
 struct Squadra {
     nomesquadra: &str,
     alias: [&str],
-    punti: u8 = 0,
-    puntiTrad: u8 = 0,
-    golfatti: u16 = 0,
-    golsubiti: u16 = 0,
-    sconfitte: u8 = 0,
-    pareggi: u8 = 0,
-    vittorie: u8 = 0,
-    somma: u16 = 0,
-};
+    punti: u8,
+    puntiTrad: u8,
+    golfatti: u16,
+    golsubiti: u16,
+    sconfitte: u8,
+    pareggi: u8,
+    vittorie: u8,
+    somma: u16,
+}
+
 impl Squadra    {
     pub fn new(n: &str, a; [&str]) -> Squadra  {
         Squadra {
