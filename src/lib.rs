@@ -52,54 +52,23 @@ impl Squadra    {
     this.golfatti = this.golfatti+GFa;
     this.golsubiti = this.golsubiti+GSa;
   }
-  getPunti(): number {
-    return this.punti;
-  }
-  getPuntiTrad(): number {
-    return this.puntiTrad;
-  }
-  getGolFatti(): number {
-    return this.golfatti;
-  }
-  getGolSubiti(): number  {
-    return this.golsubiti;
-  }
-  getVittorie(): number {
-    return this.vittorie;
-  }
-  getPareggi(): number  {
-    return this.pareggi;
-  }
-  getSconfitte(): number  {
-    return this.sconfitte;
-  }
-  azzeraPunti() {
+  pub fn azzeraPunti() {
     this.punti=0;
   }
-  azzeraPuntiTrad() {
+  pub fn azzeraPuntiTrad() {
     this.puntiTrad=0;
   }
-  resettaGol()  {
+  pub fn resettaGol()  {
     this.golfatti = 0;
     this.golsubiti = 0;
   }
-  resettaPartiteVintePersePareggiate()  {
+  pub fn resettaPartiteVintePersePareggiate()  {
     this.vittorie = 0;
     this.pareggi = 0;
     this.sconfitte = 0;
   }
-  calcolaSomma()  {
+  pub fn calcolaSomma()  {
     this.somma = this.punti + this.puntiTrad;
-  }
-  getSomma()  {
-    return this.somma;
-  }
-  aggiungiAlias(alias: string[])  {
-    if(alias) {
-      alias.forEach(al =>  {
-        this.alias.push(al);
-      })
-    }
   }
 }
 squadre = [
