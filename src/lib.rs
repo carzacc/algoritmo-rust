@@ -1,3 +1,5 @@
+const  quotaCS: u8 = 2.5;
+
 struct Squadra {
     nomesquadra: &str,
     alias: [&str],
@@ -12,7 +14,7 @@ struct Squadra {
 }
 
 impl Squadra    {
-    pub fn new(n: &str, a; [&str]) -> Squadra  {
+    pub fn new(n: &str, a: [&str]) -> Squadra  {
         Squadra {
             nomesquadra: n,
             alias: a,
@@ -26,57 +28,55 @@ impl Squadra    {
             somma: 0,
         }
     }
-    pub fn aggiungipartita(GFa, GSa) {
+    pub fn aggiungipartita(&self,GFa: u8, GSa: u8)   {
     if (GFa > GSa) {
-      this.puntiTrad = this.puntiTrad + 3;
-      this.vittorie = this.vittorie + 1;
+      self.puntiTrad = self.puntiTrad + 3;
+      self.vittorie = self.vittorie + 1;
     }
     if (GFa == GSa) {
-      this.puntiTrad = this.puntiTrad + 1;
-      this.pareggi = this.pareggi + 1;
+      self.puntiTrad = self.puntiTrad + 1;
+      self.pareggi = self.pareggi + 1;
     }
     if (GFa < GSa)  {
-      this.sconfitte = this.sconfitte + 1;
+      self.sconfitte = self.sconfitte + 1;
     }
 
     if (GSa == 0) {
-      this.punti = this.punti + quotaCS;
+      self.punti = self.punti + quotaCS;
     } else {
       if (GSa == 1) {
-        this.punti = this.punti + 1.5;
+        self.punti = self.punti + 1.5;
       }
     }
     if (GFa > 0) {
-      this.punti = this.punti + 1.3;
+      self.punti = self.punti + 1.3;
     }
-    this.golfatti = this.golfatti+GFa;
-    this.golsubiti = this.golsubiti+GSa;
+    self.golfatti = self.golfatti+GFa;
+    self.golsubiti = self.golsubiti+GSa;
   }
-  pub fn azzeraPunti() {
-    this.punti=0;
+  pub fn azzeraPunti(&self)   {
+    self.punti=0;
   }
-  pub fn azzeraPuntiTrad() {
-    this.puntiTrad=0;
+  pub fn azzeraPuntiTrad(&self)   {
+    self.puntiTrad=0;
   }
-  pub fn resettaGol()  {
-    this.golfatti = 0;
-    this.golsubiti = 0;
+  pub fn resettaGol(&self)    {
+    self.golfatti = 0;
+    self.golsubiti = 0;
   }
-  pub fn resettaPartiteVintePersePareggiate()  {
-    this.vittorie = 0;
-    this.pareggi = 0;
-    this.sconfitte = 0;
+  pub fn resettaPartiteVintePersePareggiate(&self)    {
+    self.vittorie = 0;
+    self.pareggi = 0;
+    self.sconfitte = 0;
   }
-  pub fn calcolaSomma()  {
-    this.somma = this.punti + this.puntiTrad;
+  pub fn calcolaSomma(&self)    {
+    self.somma = self.punti + self.puntiTrad;
   }
 }
-squadre = [
-    
-]
+
 
 /// Ha bisogno che ogni oggetto nell'array squadre abbia nomesquadra e alias come proprietà e aggiungipartita come metodo
-pub extern fn partita(squadra1: &str, squadra2: &str, goal1: u8, goal2: u8) -> void {
+pub extern fn partita(squadra1: &str, squadra2: &str, goal1: u8, goal2: u8)  {
   for corrente in squadre  {
     if(corrente.nomesquadra.to_lowercase() == squadra1.to_lowercase())       { corrente.aggiungipartita(goal1,goal2); }
     else if(corrente.nomesquadra.to_lowercase() == squadra2.to_lowercase())  {corrente.aggiungipartita(goal2,goal1);}
@@ -89,7 +89,12 @@ pub extern fn partita(squadra1: &str, squadra2: &str, goal1: u8, goal2: u8) -> v
   }
 }
 
-pub extern fn partite (giornata: u8) -> void {
+pub extern fn partite (giornata: u8)  {
+  let squadre: [Squadra] = [
+    Squadra::new("Inter",[]),
+    Squadra::new("juventus",["juve"])
+  ];
+
     for squadra in squadre {
     squadra.azzeraPunti();
     squadra.azzeraPuntiTrad();
@@ -257,7 +262,7 @@ pub extern fn partite (giornata: u8) -> void {
           }
           if giornata>14  {
             partita("Roma","Spal",3,1);
-            partita("Napoli","juventus",0,1)
+            partita("Napoli","juventus",0,1);
             partita("Torino","Atalanta",1,1);
             partita("Benevento","Milan",2,2);
             partita("Bologna","Cagliari",1,1);
