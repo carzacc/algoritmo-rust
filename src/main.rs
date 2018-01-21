@@ -1,102 +1,76 @@
-const  quotaCS: f32 = 2.5;
-
+const  QUOTA_CS: f32 = 2.5;
+const NUMERO_SQUADRE: usize = 3;
 pub struct Squadra {
     nomesquadra: String,
     punti: f32,
-    puntiTrad: u16,
+    punti_trad: u16,
     golfatti: u16,
     golsubiti: u16,
     sconfitte: u16,
     pareggi: u16,
     vittorie: u16,
-    somma: f32,
 }
 
 impl Squadra    {
-    pub fn new(n: &str) -> Squadra  {
+    pub extern fn new(n: &str) -> Squadra  {
         Squadra {
             nomesquadra: n.to_owned(),
             punti: 0.0,
-            puntiTrad: 0,
+            punti_trad: 0,
             golfatti: 0,
             golsubiti: 0,
             sconfitte: 0,
             pareggi: 0,
             vittorie: 0,
-            somma: 0.0,
         }
     }
-    pub fn aggiungipartita(&self,GFa: u16, GSa: u16)   {
-    if (GFa > GSa) {
-      self.puntiTrad = self.puntiTrad + 3;
+    pub extern fn somma(&self) -> f32  {
+      self.punti + (self.punti_trad as f32)
+    }
+    pub extern fn aggiungipartita(&mut self,gf: u16, gs: u16)   {
+    if (gf > gs) {
+      self.punti_trad = self.punti_trad + 3;
       self.vittorie = self.vittorie + 1;
     }
-    if (GFa == GSa) {
-      self.puntiTrad = self.puntiTrad + 1;
+    if (gf == gs) {
+      self.punti_trad = self.punti_trad + 1;
       self.pareggi = self.pareggi + 1;
     }
-    if (GFa < GSa)  {
+    if (gf < gs)  {
       self.sconfitte = self.sconfitte + 1;
     }
 
-    if (GSa == 0) {
-      self.punti = self.punti + quotaCS;
+    if (gs == 0) {
+      self.punti = self.punti + QUOTA_CS;
     } else {
-      if (GSa == 1) {
+      if (gs == 1) {
         self.punti = self.punti + 1.5;
       }
-    }
-    if (GFa > 0) {
+    }  
+
+    if (gf > 0) {
       self.punti = self.punti + 1.3;
     }
-    self.golfatti = self.golfatti+GFa;
-    self.golsubiti = self.golsubiti+GSa;
-
+    self.golfatti = self.golfatti+gf;
+    self.golsubiti = self.golsubiti+gs;
   }
-  pub fn azzeraPunti(&self)   {
-    self.punti=0.0;
-  }
-  pub fn azzeraPuntiTrad(&self)   {
-    self.puntiTrad=0;
-  }
-  pub fn resettaGol(&self)    {
-    self.golfatti = 0;
-    self.golsubiti = 0;
-  }
-  pub fn resettaPartiteVintePersePareggiate(&self)    {
-    self.vittorie = 0;
-    self.pareggi = 0;
-    self.sconfitte = 0;
-  }
-  pub fn calcolaSomma(&self)    {
-    self.somma = self.punti + (self.puntiTrad as f32);
-  } 
 }
-
+pub extern fn arrotonda(x: f32) -> f32 { ((x*10.0).round())/10.0 }
 
 /// Ha bisogno che ogni oggetto nell'array squadre abbia nomesquadra e alias come proprietà e aggiungipartita come metodo
-pub extern fn partita(&mut squadre: &mut [Squadra; 3], squadra1: &str, squadra2: &str, goal1: u16, goal2: u16)  {
-  for corrente in squadre.iter()  {
-    if(corrente.nomesquadra.to_lowercase() == squadra1.to_lowercase())       { corrente.aggiungipartita(goal1,goal2); }
-    else if(corrente.nomesquadra.to_lowercase() == squadra2.to_lowercase())  {corrente.aggiungipartita(goal2,goal1);}
-    }
+pub extern fn partita(ref mut s: &mut [Squadra; NUMERO_SQUADRE], squadra1: &str, squadra2: &str, goal1: u16, goal2: u16)  {
+  for a in 0..NUMERO_SQUADRE-1  {
+    if(s[a].nomesquadra.to_lowercase() == squadra1.to_lowercase())       {s[a].aggiungipartita(goal1,goal2);}
+    else if(s[a].nomesquadra.to_lowercase() == squadra2.to_lowercase())  {s[a].aggiungipartita(goal2,goal1);}
   }
+}
 
-pub extern fn partite (giornata: u8)  {
-  let mut g = giornata;
-  let mut squadre: [Squadra; 3] = [
+pub extern fn calcola_algoritmo (giornata: u8) -> [Squadra; NUMERO_SQUADRE]  {
+  let mut squadre: [Squadra; NUMERO_SQUADRE] = [
     Squadra::new("Inter"),
     Squadra::new("juventus"),
     Squadra::new("")
   ];
-
-    for squadra in squadre.iter() {
-    squadra.azzeraPunti();
-    squadra.azzeraPuntiTrad();
-    squadra.resettaGol();
-    squadra.resettaPartiteVintePersePareggiate();
-  }
-  if g==0 { g=40; }
   partita(&mut squadre, "juventus", "Cagliari", 3, 0);
   partita(&mut squadre, "Verona", "Napoli", 1, 3);
   partita(&mut squadre, "Atalanta", "Roma", 0, 1);
@@ -331,6 +305,12 @@ pub extern fn partite (giornata: u8)  {
       }
     }
   }
-  for s in squadre.iter() { s.calcolaSomma(); }
+  return squadre
 }
 
+fn main() {
+  let squadre = calcola_algoritmo(20);
+  for s in squadre.iter() {
+    println!("{}: {}",s.nomesquadra, arrotonda(s.punti));
+  }
+}
