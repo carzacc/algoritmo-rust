@@ -59,9 +59,15 @@ pub extern fn arrotonda(x: f32) -> f32 { ((x*10.0).round())/10.0 }
 
 /// Ha bisogno che ogni oggetto nell'array squadre abbia nomesquadra e alias come proprietà e aggiungipartita come metodo
 pub extern fn partita(ref mut s: &mut [Squadra; NUMERO_SQUADRE], squadra1: &str, squadra2: &str, goal1: u16, goal2: u16)  {
+<<<<<<< HEAD:src/main.rs
   for a in 0..NUMERO_SQUADRE  {
     if(s[a].nomesquadra.to_lowercase() == squadra1.to_lowercase())       {s[a].aggiungipartita(goal1,goal2);}
     if(s[a].nomesquadra.to_lowercase() == squadra2.to_lowercase())  {s[a].aggiungipartita(goal2,goal1);}
+=======
+  for a in 0..NUMERO_SQUADRE-1  {
+    if(s[a].nomesquadra.to_lowercase() == squadra1.to_lowercase())       {s[a].aggiungipartita(goal1,goal2);}
+    else if(s[a].nomesquadra.to_lowercase() == squadra2.to_lowercase())  {s[a].aggiungipartita(goal2,goal1);}
+>>>>>>> d07ba974c003cd19b7fba06c24a7d703f7dd9f7e:src/main.rs
   }
 }
 
