@@ -1,5 +1,5 @@
 const  QUOTA_CS: f32 = 2.5;
-const NUMERO_SQUADRE: usize = 3;
+const NUMERO_SQUADRE: usize = 20;
 pub struct Squadra {
     nomesquadra: String,
     punti: f32,
@@ -59,9 +59,9 @@ pub extern fn arrotonda(x: f32) -> f32 { ((x*10.0).round())/10.0 }
 
 /// Ha bisogno che ogni oggetto nell'array squadre abbia nomesquadra e alias come proprietà e aggiungipartita come metodo
 pub extern fn partita(ref mut s: &mut [Squadra; NUMERO_SQUADRE], squadra1: &str, squadra2: &str, goal1: u16, goal2: u16)  {
-  for a in 0..NUMERO_SQUADRE-1  {
+  for a in 0..NUMERO_SQUADRE  {
     if(s[a].nomesquadra.to_lowercase() == squadra1.to_lowercase())       {s[a].aggiungipartita(goal1,goal2);}
-    else if(s[a].nomesquadra.to_lowercase() == squadra2.to_lowercase())  {s[a].aggiungipartita(goal2,goal1);}
+    if(s[a].nomesquadra.to_lowercase() == squadra2.to_lowercase())  {s[a].aggiungipartita(goal2,goal1);}
   }
 }
 
@@ -69,7 +69,24 @@ pub extern fn calcola_algoritmo (giornata: u8) -> [Squadra; NUMERO_SQUADRE]  {
   let mut squadre: [Squadra; NUMERO_SQUADRE] = [
     Squadra::new("Inter"),
     Squadra::new("juventus"),
-    Squadra::new("")
+    Squadra::new("cagliari"),
+    Squadra::new("verona"),
+    Squadra::new("napoli"),
+    Squadra::new("torino"),
+    Squadra::new("atalanta"),
+    Squadra::new("bologna"),
+    Squadra::new("milan"),
+    Squadra::new("crotone"),
+    Squadra::new("spal"),
+    Squadra::new("genoa"),
+    Squadra::new("chievo"),
+    Squadra::new("roma"),
+    Squadra::new("sassuolo"),
+    Squadra::new("fiorentina"),
+    Squadra::new("benevento"),
+    Squadra::new("lazio"),
+    Squadra::new("sampdoria"),
+    Squadra::new("udinese")
   ];
   partita(&mut squadre, "juventus", "Cagliari", 3, 0);
   partita(&mut squadre, "Verona", "Napoli", 1, 3);
