@@ -4,3 +4,8 @@ version = "0.1.0"
 authors = ["Carmine Zaccagnino <zaccagnino@hotmail.it>"]
 
 [dependencies]
+iron = "0.6.0"
+router = "0.6.0"
+serde_json = "1.0.8"
+serde = "1.0.24"
+hyper = "0.10"
