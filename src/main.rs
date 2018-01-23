@@ -1,20 +1,18 @@
-#[macro_use] 
-extern crate serde_json;
-extern crate iron;
 extern crate router;
-extern crate hyper;
 mod algoritmo;
+#[macro_use] extern crate serde_json;
+extern crate iron;
+extern crate hyper;
 
+use router::Router;
+use iron::{Iron, Request, Response, IronResult,status};
 use algoritmo::algoritmo::{arrotonda,calcola_algoritmo};
 use serde_json::Value;
 use std::env;
-use iron::{Iron, Request, Response, IronResult};
 use hyper::header::{ AccessControlAllowOrigin, ContentType};
 use hyper::mime::Mime;
-use iron::mime::{TopLevel,SubLevel};
 use iron::modifiers::Header;
-use router::Router;
-use iron::status;
+use iron::mime::{TopLevel,SubLevel};
 
 fn gen_json(_: &mut Request) -> IronResult<Response> {
     let squadre = calcola_algoritmo(20);
